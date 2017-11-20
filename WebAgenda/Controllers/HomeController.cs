@@ -19,15 +19,57 @@ namespace WebAgenda.Controllers
 
         [HttpPost]
         public PartialViewResult EventList(string eventName = null, 
-                                            string eventType = null, 
+                                           string eventType = null, 
                                             DateTime? eventStartDate = null,
                                             DateTime? eventEndDate = null)
         {
 
-            var query = db.sp_listEvents(eventName, eventType, eventStartDate, eventEndDate);
+            var result = db.sp_listEvents(eventName, eventType, eventStartDate, eventEndDate);
                         
                          
-            return PartialView(query);
+            return PartialView(result);
+        }
+
+        [HttpPost]
+        public ActionResult CreateEvent(string eventName, string eventDesc, DateTime? eventDate)
+        {
+            var result = db.sp_createEvent(eventName, eventDesc, eventDate).FirstOrDefault();
+
+         
+            return Json(new
+            {
+                result = (int)result            
+            });
+
+
+        }
+
+        [HttpPost]
+        public ActionResult AlterEvent(int eventId, string eventName, string eventDesc, DateTime? eventDate)
+        {
+            var result = db.sp_alterEvent(eventId, eventName, eventDesc, eventDate).FirstOrDefault();
+
+
+            return Json(new
+            {
+                result = (int)result
+            });
+
+
+        }
+
+        [HttpPost]
+        public ActionResult deleteEvent(int eventId)
+        {
+            var result = db.sp_deleteEvent(eventId).FirstOrDefault();
+
+
+            return Json(new
+            {
+                result = (int)result
+            });
+
+
         }
     }
 }

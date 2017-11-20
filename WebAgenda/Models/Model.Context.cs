@@ -49,5 +49,52 @@ namespace WebAgenda.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_listEvents_Result>("sp_listEvents", eventNameParameter, eventTypeParameter, eventStartDateParameter, eventEndDateParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> sp_alterEvent(Nullable<int> eventId, string eventName, string eventDesc, Nullable<System.DateTime> eventDate)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("eventId", eventId) :
+                new ObjectParameter("eventId", typeof(int));
+    
+            var eventNameParameter = eventName != null ?
+                new ObjectParameter("eventName", eventName) :
+                new ObjectParameter("eventName", typeof(string));
+    
+            var eventDescParameter = eventDesc != null ?
+                new ObjectParameter("eventDesc", eventDesc) :
+                new ObjectParameter("eventDesc", typeof(string));
+    
+            var eventDateParameter = eventDate.HasValue ?
+                new ObjectParameter("eventDate", eventDate) :
+                new ObjectParameter("eventDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_alterEvent", eventIdParameter, eventNameParameter, eventDescParameter, eventDateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_createEvent(string eventName, string eventDesc, Nullable<System.DateTime> eventDate)
+        {
+            var eventNameParameter = eventName != null ?
+                new ObjectParameter("eventName", eventName) :
+                new ObjectParameter("eventName", typeof(string));
+    
+            var eventDescParameter = eventDesc != null ?
+                new ObjectParameter("eventDesc", eventDesc) :
+                new ObjectParameter("eventDesc", typeof(string));
+    
+            var eventDateParameter = eventDate.HasValue ?
+                new ObjectParameter("eventDate", eventDate) :
+                new ObjectParameter("eventDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_createEvent", eventNameParameter, eventDescParameter, eventDateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_deleteEvent(Nullable<int> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("eventId", eventId) :
+                new ObjectParameter("eventId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_deleteEvent", eventIdParameter);
+        }
     }
 }

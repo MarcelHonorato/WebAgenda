@@ -22,14 +22,14 @@
                         {
                             foreach (var item in Model)
                             {
-                                <tr>
+                                <tr id="@Html.DisplayFor(modelItem => item.eventId)">                                    
                                     <td class="col-xs-1">status</td>
-                                    <td class="col-xs-2">@Html.DisplayFor(modelItem => item.eventName)</td>
-                                    <td class="hidden-xs col-sm-4">@Html.DisplayFor(modelItem => item.eventDesc)</td>
-                                    <td class="col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>
-                                    <td class="col-xs-1">detalhes</td>
-                                    <td class="col-xs-1">alterar</td>
-                                    <td class="col-xs-1">remover</td>
+                                    <td class="eventName col-xs-2">@Html.DisplayFor(modelItem => item.eventName)</td>
+                                    <td class="eventDesc hidden-xs col-sm-4">@Html.DisplayFor(modelItem => item.eventDesc)</td>
+                                    <td class="eventDate col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>
+                                    <td class="showDetais col-xs-1"><img src="~/Images/rsz_info-icon.png" /></td>
+                                    <td class="alterEvent col-xs-1" data-toggle="modal" data-target="#modalAlterEvent"><img src="~/Images/rsz_configure-icon-62405.png" /></td>
+                                    <td class="deleteEvent col-xs-1"><img src="~/Images/rsz_delete-icon.png" /></td>
                                 </tr>
                             }
                         }
@@ -45,4 +45,154 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalAlterEvent" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alterar Evento</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <input  type="text" id="alterEventId" style="display:none">
+
+                        <div class="col-md-6 form-group">
+                            <label>Nome do evento:</label>
+                            <input type="text" class="form-control" id="alterEventName">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Descrição do evento:</label>
+                            <input type="text" class="form-control" id="alterEventDesc">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Data do evento</label>
+                            <input id="alterEventDate" class="form-control" type="datetime-local" />
+                        </div>
+                        <div class="col-md-6 form-group align-center">
+                            <label class="col-xs-12">&nbsp;</label>
+                            <button id="AlterEventConfirm" class="btn btn-default">Alterar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    $(".deleteEvent").click(function () {
+
+        var idEvent = $(this).closest('tr').attr('id');
+
+        bootbox.confirm("Deseja excluir esse evento?", function (result) {
+            if (result == true) {
+
+                var data = {
+                    'eventId': idEvent
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("deleteEvent", "Home")',
+                    data: data,
+                    dataType: 'json',
+                    cache: false,
+                    async: true,
+                    success: function (response) {
+
+                        if (response.result == 1) {
+                            bootbox.confirm('O evento foi excluido!', function (result) {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            bootbox.alert('Não foi possivel excluir o evento, tente novamente mais tarde');
+                        }
+
+                    },
+                    error: function (response) {
+
+                        bootbox.alert('Não foi possivel excluir o evento, tente novamente mais tarde');
+                    }
+                });
+
+
+            }
+        });
+
+
+    });    
+
+     $('.alterEvent').click(function () {  
+        var idEvent = $(this).closest('tr').attr('id');
+        var eventName = $(this).closest('tr').children('td.eventName').text();
+        var eventDesc = $(this).closest('tr').children('td.eventDesc').text();
+        var eventDate = $(this).closest('tr').children('td.eventDate').text();       
+        var DateEventDate = formatDate(eventDate);
+
+        $('#alterEventId').val(idEvent);
+        $('#alterEventName').val(eventName);
+        $('#alterEventDesc').val(eventDesc);
+        $('#alterEventDate').val(DateEventDate);
+    });
+
+
+     $('#AlterEventConfirm').click(function (event) {
+
+        event.preventDefault();
+        
+        bootbox.confirm("Deseja Alterar esse evento?", function (result) {
+            if (result == true) {
+
+                var data = {
+                     'eventId': $('#alterEventId').val(),
+                     'eventName': $('#alterEventName').val(),
+                     'eventDesc': $('#alterEventDesc').val(),
+                     'eventDate': $('#alterEventDate').val(),
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("alterEvent", "Home")',
+                    data: data,
+                    dataType: 'json',
+                    cache: false,
+                    async: true,
+                    success: function (response) {
+
+                        if (response.result == 1) {
+                            bootbox.confirm('O evento foi alterado!', function (result) {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            bootbox.alert('Não foi possivel alterar o evento, tente novamente mais tarde');
+                        }
+
+                    },
+                    error: function (response) {
+
+                        bootbox.alert('Não foi possivel alterar o evento, tente novamente mais tarde');
+                    }
+                });
+
+
+            }
+        });
+
+
+    });
+
+
+</script>

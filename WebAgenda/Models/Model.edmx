@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="webAgendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="webAgendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tb_event">
           <Key>
             <PropertyRef Name="eventId" />
@@ -15,6 +15,20 @@
           <Property Name="eventDate" Type="datetime" />
           <Property Name="eventFlag" Type="int" Nullable="false" />
         </EntityType>
+        <Function Name="sp_alterEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eventId" Type="int" Mode="In" />
+          <Parameter Name="eventName" Type="varchar" Mode="In" />
+          <Parameter Name="eventDesc" Type="varchar" Mode="In" />
+          <Parameter Name="eventDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_createEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eventName" Type="varchar" Mode="In" />
+          <Parameter Name="eventDesc" Type="varchar" Mode="In" />
+          <Parameter Name="eventDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_deleteEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eventId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_listEvents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="eventName" Type="varchar" Mode="In" />
           <Parameter Name="eventType" Type="char" Mode="In" />
@@ -24,8 +38,7 @@
         <EntityContainer Name="webAgendaModelStoreContainer">
           <EntitySet Name="tb_event" EntityType="Self.tb_event" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="webAgendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -46,6 +59,20 @@
             <Parameter Name="eventType" Mode="In" Type="String" />
             <Parameter Name="eventStartDate" Mode="In" Type="DateTime" />
             <Parameter Name="eventEndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterEvent" ReturnType="Collection(Int32)">
+            <Parameter Name="eventId" Mode="In" Type="Int32" />
+            <Parameter Name="eventName" Mode="In" Type="String" />
+            <Parameter Name="eventDesc" Mode="In" Type="String" />
+            <Parameter Name="eventDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_createEvent" ReturnType="Collection(Int32)">
+            <Parameter Name="eventName" Mode="In" Type="String" />
+            <Parameter Name="eventDesc" Mode="In" Type="String" />
+            <Parameter Name="eventDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_deleteEvent" ReturnType="Collection(Int32)">
+            <Parameter Name="eventId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_listEvents_Result">
@@ -83,6 +110,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterEvent" FunctionName="webAgendaModel.Store.sp_alterEvent" />
+          <FunctionImportMapping FunctionImportName="sp_createEvent" FunctionName="webAgendaModel.Store.sp_createEvent" />
+          <FunctionImportMapping FunctionImportName="sp_deleteEvent" FunctionName="webAgendaModel.Store.sp_deleteEvent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

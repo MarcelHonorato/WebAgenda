@@ -3,53 +3,104 @@
 }
 
 
-       
-        <div class="row">     
-            <form>
-                <div class="col-xs-6 col-md-3 form-group">
-                    <label>Nome do evento:</label>
-                    <input type="text" class="form-control" id="searchEventName">
-                </div>
-                <div class="col-xs-6 col-md-3 form-group">
-                    <label>Tipo do evento</label>
-                    <select id="searchEventType" class="form-control">
-                        <option>Selecione...</option>
-                        <option>Passados</option>
-                        <option>Atuais</option>
-                        <option>Futuros</option>
-                    </select>
-                </div>
-                <div class="col-xs-6 col-md-3 form-group">
-                    <label>Data inicial</label>
-                    <input id="searchEventStartDate" class="form-control" type="date" />
-                </div>
-                <div class="col-xs-6 col-md-2 form-group">
-                    <label>Data final</label>
-                    <input id="searchEventEndDate" class="form-control" type="date" />
-                </div>
+    <div class="row">     
+        <form>
+            <div class="col-xs-6 col-md-3 form-group">
+                <label>Nome do evento:</label>
+                <input type="text" class="form-control" id="searchEventName">
+            </div>
+
+            <div class="col-xs-6 col-md-3 form-group">
+                <label>Tipo do evento</label>
+                <select id="searchEventType" class="form-control">
+                    <option value="all">Todos</option>
+                    <option value="past">Passados</option>
+                    <option value="actual">Atuais</option>
+                    <option value="future">Futuros</option>
+                </select>
+            </div>
+
+            <div class="col-xs-6 col-md-3 form-group">
+                <label>Data inicial</label>
+                <input id="searchEventStartDate" class="form-control" type="datetime-local" />
+            </div>
+
+            <div class="col-xs-6 col-md-3 form-group">
+                <label>Data final</label>
+                <input id="searchEventEndDate" class="form-control" type="datetime-local" />
+            </div>
+
+            <div class="col-xs-12 col-md-4 form-group align-center">
+                <label class="col-xs-12">&nbsp;</label>
+                <button id="newEvent" class="btn btn-default btn-success btn-block " data-toggle="modal" data-target="#modalNewEvent">Novo evento</button>
+            </div> 
                 
-                <div class="col-xs-12 col-md-1 form-group align-center">
-                    <label class="col-xs-12">&nbsp;</label>
-                    <button class="btn btn-default">Filtrar</button>
-                </div>
-            </form>
-           </div>
+            <div class="col-xs-12 col-md-4 form-group align-center">
+                <label class="col-xs-12">&nbsp;</label>
+                <button id="searchEvents" class="btn btn-default  btn-block ">Filtrar</button>
+            </div>
+            
+            <div class="col-xs-12 col-md-4 form-group align-center">
+                <label class="col-xs-12">&nbsp;</label>
+                <button id="clearFilters" class="btn btn-default  btn-block ">Limpar filtros</button>
+            </div>  
+
+                
+        </form>
+        </div>
 
         <div class="row">
             <div id="eventList">
             </div>
+        </div>           
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalNewEvent" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Novo Evento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+
+                                <div class="col-md-6 form-group">
+                                    <label>Nome do evento:</label>
+                                    <input type="text" class="form-control" id="newEventName">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Descrição do evento:</label>
+                                    <input type="text" class="form-control" id="newEventDesc">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Data do evento</label>
+                                    <input id="newEventDate" class="form-control" type="datetime-local" />
+                                </div>
+                                <div class="col-md-6 form-group align-center">
+                                    <label class="col-xs-12">&nbsp;</label>
+                                    <button id="buttonNewEvent" class="btn btn-default">Criar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>                
+                </div>
+
+            </div>
         </div>
-            
 
 
 
 <script type="text/javascript">
-   
-    var url = '@Url.Action("EventList", "Home")';  
-  
+
     $.ajax({
         type: 'POST',
-        url: url,
+        url: '@Url.Action("EventList", "Home")',
         dataType: 'html',
         cache: false,
         async: true,
@@ -60,6 +111,84 @@
         }
     });
 
+    $('#newEvent').click(function (event) {
+        event.preventDefault();
+        $('.modalNewEvent').modal('show');
+    });
 
+    $('#searchEvents').click(function (event) {
+
+        event.preventDefault();
+
+        var data = {
+            'eventName': $('#searchEventName').val(),
+            'eventType': $('#searchEventType').val(),
+            'eventStartDate': $('#searchEventStartDate').val(),
+            'eventEndDate': $('#searchEventEndDate').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EventList", "Home")',
+            data: data,
+            dataType: 'html',
+            cache: false,
+            async: true,
+            success: function (data) {
+                $('#eventList').html(data);
+            },
+            error: function (data) {
+            }
+        });
+
+    });
+
+    $('#buttonNewEvent').click(function (event) {
+
+        $('#searchEventName').val('');
+        $('#searchEventType').val('');
+        $('#searchEventStartDate').val('');
+        $('#searchEventEndDate').val('');
+
+    });
+
+
+    $('#buttonNewEvent').click(function (event) {
+
+        event.preventDefault();
+        var data = {
+            'eventName': $('#newEventName').val(),
+            'eventDesc': $('#newEventDesc').val(),
+            'eventDate': $('#newEventDate').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateEvent", "Home")',
+            data: data,
+            dataType: 'json',
+            cache: false,
+            async: true,
+            success: function (response) {              
+                if (response.result == 1) {
+                    bootbox.confirm('O evento foi criado!', function (result) {
+                        if (result == true) {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    bootbox.alert('Não foi possivel criar o evento, tente novamente mais tarde');
+
+                }
+
+            },
+            error: function (response) {                
+                bootbox.alert('Não foi possivel criar o evento, tente novamente mais tarde');
+            }
+        });
+
+        
+
+    });   
 
 </script>
