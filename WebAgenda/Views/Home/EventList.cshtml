@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebAgenda.Models.sp_listEvents_Result>
+
+<div class="row" id="EventList">
+    <div class="col-xs-12" style="padding:25px">
+        <div class="divGridEvents">
+            <table class="table table-striped table-responsive table-bordered tableGridEvents">
+                <thead>
+                    <tr>
+                        <th class="col-xs-1">Status</th>
+                        <th class="col-xs-2">Nome do Evento</th>
+                        <th class="hidden-xs col-sm-4">Descrição</th>
+                        <th class="col-xs-2">Data</th>
+                        <th class="col-xs-1">Detalhes</th>
+                        <th class="col-xs-1">Alterar</th>
+                        <th class="col-xs-1">Remover</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="col-xs-1">status</td>
+                                    <td class="col-xs-2">@Html.DisplayFor(modelItem => item.eventName)</td>
+                                    <td class="hidden-xs col-sm-4">@Html.DisplayFor(modelItem => item.eventDesc)</td>
+                                    <td class="col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>
+                                    <td class="col-xs-1">detalhes</td>
+                                    <td class="col-xs-1">alterar</td>
+                                    <td class="col-xs-1">remover</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

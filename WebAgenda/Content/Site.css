@@ -1,24 +1,54 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    background-color: #3cabc4;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
+
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
 }
+
+.divHeader {
+    background-color: #373d60;
+    color: white;
+    font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif;
+    padding-left: 20px;
+}
+
+.divGridEvents {
+    background-color: #DEDEDE;
+
+}
+
+table.tableGridEvents {
+    display: table;
+    width: 100%;
+}
+
+table.tableGridEvents thead, table.tableGridEvents tbody {
+    float: left;
+    width: 100%;
+}
+
+table.tableGridEvents tbody {
+    overflow: auto;
+    max-height: 300px;
+}
+
+table.tableGridEvents tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+

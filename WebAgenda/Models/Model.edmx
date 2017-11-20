@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="webAgendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_event">
+          <Key>
+            <PropertyRef Name="eventId" />
+          </Key>
+          <Property Name="eventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eventName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="eventDesc" Type="varchar" MaxLength="100" />
+          <Property Name="eventDate" Type="datetime" />
+          <Property Name="eventFlag" Type="int" Nullable="false" />
+        </EntityType>
+        <Function Name="sp_listEvents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eventName" Type="varchar" Mode="In" />
+          <Parameter Name="eventType" Type="char" Mode="In" />
+          <Parameter Name="eventStartDate" Type="date" Mode="In" />
+          <Parameter Name="eventEndDate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="webAgendaModelStoreContainer">
+          <EntitySet Name="tb_event" EntityType="Self.tb_event" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="webAgendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_event">
+          <Key>
+            <PropertyRef Name="eventId" />
+          </Key>
+          <Property Name="eventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eventName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="eventDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="eventDate" Type="DateTime" Precision="3" />
+          <Property Name="eventFlag" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="webAgendaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_event" EntityType="Self.tb_event" />
+          <FunctionImport Name="sp_listEvents" ReturnType="Collection(webAgendaModel.sp_listEvents_Result)">
+            <Parameter Name="eventName" Mode="In" Type="String" />
+            <Parameter Name="eventType" Mode="In" Type="String" />
+            <Parameter Name="eventStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="eventEndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_listEvents_Result">
+          <Property Type="Int32" Name="eventId" Nullable="false" />
+          <Property Type="String" Name="eventName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="eventDesc" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="eventDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="eventFlag" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="webAgendaModelStoreContainer" CdmEntityContainer="webAgendaEntities">
+          <EntitySetMapping Name="tb_event">
+            <EntityTypeMapping TypeName="webAgendaModel.tb_event">
+              <MappingFragment StoreEntitySet="tb_event">
+                <ScalarProperty Name="eventId" ColumnName="eventId" />
+                <ScalarProperty Name="eventName" ColumnName="eventName" />
+                <ScalarProperty Name="eventDesc" ColumnName="eventDesc" />
+                <ScalarProperty Name="eventDate" ColumnName="eventDate" />
+                <ScalarProperty Name="eventFlag" ColumnName="eventFlag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_listEvents" FunctionName="webAgendaModel.Store.sp_listEvents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="webAgendaModel.sp_listEvents_Result">
+                <ScalarProperty Name="eventId" ColumnName="eventId" />
+                <ScalarProperty Name="eventName" ColumnName="eventName" />
+                <ScalarProperty Name="eventDesc" ColumnName="eventDesc" />
+                <ScalarProperty Name="eventDate" ColumnName="eventDate" />
+                <ScalarProperty Name="eventFlag" ColumnName="eventFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

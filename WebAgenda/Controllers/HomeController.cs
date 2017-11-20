@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebAgenda.Models;
 
 namespace WebAgenda.Controllers
 {
     public class HomeController : Controller
     {
+        webAgendaEntities db = new webAgendaEntities();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+
+        [HttpPost]
+        public PartialViewResult EventList(string eventName = null, 
+                                            string eventType = null, 
+                                            DateTime? eventStartDate = null,
+                                            DateTime? eventEndDate = null)
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var query = db.sp_listEvents(eventName, eventType, eventStartDate, eventEndDate);
+                        
+                         
+            return PartialView(query);
         }
     }
 }
