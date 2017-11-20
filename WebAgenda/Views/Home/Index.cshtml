@@ -96,7 +96,7 @@
 
 
 
-<script type="text/javascript">
+<script type="text/javascript">   
 
     $.ajax({
         type: 'POST',
@@ -111,22 +111,30 @@
         }
     });
 
+
     $('#newEvent').click(function (event) {
         event.preventDefault();
         $('.modalNewEvent').modal('show');
     });
 
-    $('#searchEvents').click(function (event) {
 
+    $('#clearFilters').click(function (event) {
         event.preventDefault();
+        $('#searchEventName').val('');
+        $('#searchEventType').val('all');
+        $('#searchEventStartDate').val('');
+        $('#searchEventEndDate').val('');
+    });
 
+
+    $('#searchEvents').click(function (event) {
+        event.preventDefault();
         var data = {
             'eventName': $('#searchEventName').val(),
             'eventType': $('#searchEventType').val(),
             'eventStartDate': $('#searchEventStartDate').val(),
             'eventEndDate': $('#searchEventEndDate').val()
         };
-
         $.ajax({
             type: 'POST',
             url: '@Url.Action("EventList", "Home")',
@@ -140,28 +148,16 @@
             error: function (data) {
             }
         });
-
-    });
-
-    $('#buttonNewEvent').click(function (event) {
-
-        $('#searchEventName').val('');
-        $('#searchEventType').val('');
-        $('#searchEventStartDate').val('');
-        $('#searchEventEndDate').val('');
-
     });
 
 
     $('#buttonNewEvent').click(function (event) {
-
         event.preventDefault();
         var data = {
             'eventName': $('#newEventName').val(),
             'eventDesc': $('#newEventDesc').val(),
             'eventDate': $('#newEventDate').val()
         };
-
         $.ajax({
             type: 'POST',
             url: '@Url.Action("CreateEvent", "Home")',
@@ -178,17 +174,12 @@
                     });
                 } else {
                     bootbox.alert('Não foi possivel criar o evento, tente novamente mais tarde');
-
                 }
-
             },
             error: function (response) {                
                 bootbox.alert('Não foi possivel criar o evento, tente novamente mais tarde');
             }
-        });
-
-        
-
+        });       
     });   
 
 </script>

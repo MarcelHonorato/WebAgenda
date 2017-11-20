@@ -6,13 +6,12 @@
             <table class="table table-striped table-responsive table-bordered tableGridEvents">
                 <thead>
                     <tr>
-                        <th class="col-xs-1">Status</th>
+                        <th class="col-xs-1" style="text-align:center;">Status</th>
                         <th class="col-xs-2">Nome do Evento</th>
-                        <th class="hidden-xs col-sm-4">Descrição</th>
-                        <th class="col-xs-2">Data</th>
-                        <th class="col-xs-1">Detalhes</th>
-                        <th class="col-xs-1">Alterar</th>
-                        <th class="col-xs-1">Remover</th>
+                        <th class="col-xs-5">Descrição</th>
+                        <th class="col-xs-2">Data</th>                       
+                        <th class="col-xs-1" style="text-align:center;">Alterar</th>
+                        <th class="col-xs-1" style="text-align:center;">Remover</th>
 
                     </tr>
                 </thead>
@@ -23,13 +22,12 @@
                             foreach (var item in Model)
                             {
                                 <tr id="@Html.DisplayFor(modelItem => item.eventId)">                                    
-                                    <td class="col-xs-1">status</td>
-                                    <td class="eventName col-xs-2">@Html.DisplayFor(modelItem => item.eventName)</td>
-                                    <td class="eventDesc hidden-xs col-sm-4">@Html.DisplayFor(modelItem => item.eventDesc)</td>
-                                    <td class="eventDate col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>
-                                    <td class="showDetais col-xs-1"><img src="~/Images/rsz_info-icon.png" /></td>
-                                    <td class="alterEvent col-xs-1" data-toggle="modal" data-target="#modalAlterEvent"><img src="~/Images/rsz_configure-icon-62405.png" /></td>
-                                    <td class="deleteEvent col-xs-1"><img src="~/Images/rsz_delete-icon.png" /></td>
+                                    <td class="col-xs-1" style="text-align:center;">@Html.DisplayFor(modelItem => item.eventType)</td>
+                                    <td class="eventName col-xs-2" >@Html.DisplayFor(modelItem => item.eventName)</td>
+                                    <td class="eventDesc col-xs-5">@Html.DisplayFor(modelItem => item.eventDesc)</td>
+                                    <td class="eventDate col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>                                    
+                                    <td class="alterEvent col-xs-1" data-toggle="modal" data-target="#modalAlterEvent" style="text-align:center;"><img src="~/Images/rsz_configure-icon-62405.png" /></td>
+                                    <td class="deleteEvent col-xs-1" style="text-align:center;"><img src="~/Images/rsz_delete-icon.png" /></td>
                                 </tr>
                             }
                         }

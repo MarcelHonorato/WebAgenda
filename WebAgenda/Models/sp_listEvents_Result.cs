@@ -18,5 +18,6 @@ namespace WebAgenda.Models
         public string eventDesc { get; set; }
         public Nullable<System.DateTime> eventDate { get; set; }
         public int eventFlag { get; set; }
+        public string eventType { get; set; }
     }
 }

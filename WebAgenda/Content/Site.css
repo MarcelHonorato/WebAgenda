@@ -23,7 +23,7 @@ textarea {
     background-color: #373d60;
     color: white;
     font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif;
-    padding-left: 20px;
+    text-align:center;
 }
 
 .divGridEvents {
@@ -34,6 +34,8 @@ textarea {
 table.tableGridEvents {
     display: table;
     width: 100%;
+    word-break: break-all;
+
 }
 
 table.tableGridEvents thead, table.tableGridEvents tbody {
@@ -49,6 +51,6 @@ table.tableGridEvents tbody {
 table.tableGridEvents tr {
     width: 100%;
     display: table;
-    text-align: left;
+    
 }
 
