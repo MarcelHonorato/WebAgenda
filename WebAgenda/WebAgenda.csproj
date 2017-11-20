@@ -186,9 +186,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\rsz_configure-icon-62405.png" />
-    <Content Include="Images\rsz_delete-icon.png" />
-    <Content Include="Images\rsz_info-icon.png" />
+    <Content Include="Images\icon-config.png" />
+    <Content Include="Images\icon-delete.png" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

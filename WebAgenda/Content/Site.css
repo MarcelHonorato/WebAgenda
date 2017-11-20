@@ -1,6 +1,12 @@
 ﻿body {
+
     padding-bottom: 10px;
     background-color: #3cabc4;
+}
+
+footer {
+    text-align:center;
+
 }
 
 .body-content {
@@ -27,14 +33,23 @@ textarea {
 }
 
 .divGridEvents {
-    background-color: #DEDEDE;
+    background-color: #FFFFFF;
 
 }
 
 table.tableGridEvents {
     display: table;
     width: 100%;
-    word-break: break-all;
+    word-break:break-word;
+
+
+}
+
+
+div.jumbotron{
+
+    padding-top:20px;
+    padding-bottom:10px;
 
 }
 
@@ -54,3 +69,6 @@ table.tableGridEvents tr {
     
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+}

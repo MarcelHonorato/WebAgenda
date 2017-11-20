@@ -59,7 +59,7 @@ namespace WebAgenda.Controllers
         }
 
         [HttpPost]
-        public ActionResult deleteEvent(int eventId)
+        public ActionResult DeleteEvent(int eventId)
         {
             var result = db.sp_deleteEvent(eventId).FirstOrDefault();
 

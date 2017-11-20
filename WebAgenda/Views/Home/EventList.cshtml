@@ -3,8 +3,13 @@
 <div class="row" id="EventList">
     <div class="col-xs-12" style="padding:25px">
         <div class="divGridEvents">
-            <table class="table table-striped table-responsive table-bordered tableGridEvents">
+            <table class="table table-responsive table-bordered tableGridEvents">
                 <thead>
+                    <tr>
+                        <th class="col-xs-12" style="text-align:center;">EVENTOS</th>
+                        
+
+                    </tr>
                     <tr>
                         <th class="col-xs-1" style="text-align:center;">Status</th>
                         <th class="col-xs-2">Nome do Evento</th>
@@ -26,14 +31,14 @@
                                     <td class="eventName col-xs-2" >@Html.DisplayFor(modelItem => item.eventName)</td>
                                     <td class="eventDesc col-xs-5">@Html.DisplayFor(modelItem => item.eventDesc)</td>
                                     <td class="eventDate col-xs-2">@Html.DisplayFor(modelItem => item.eventDate)</td>                                    
-                                    <td class="alterEvent col-xs-1" data-toggle="modal" data-target="#modalAlterEvent" style="text-align:center;"><img src="~/Images/rsz_configure-icon-62405.png" /></td>
-                                    <td class="deleteEvent col-xs-1" style="text-align:center;"><img src="~/Images/rsz_delete-icon.png" /></td>
+                                    <td class="alterEvent col-xs-1" data-toggle="modal" data-target="#modalAlterEvent" style="text-align:center;"><img src="~/Images/icon-config.png" /></td>
+                                    <td class="deleteEvent col-xs-1" style="text-align:center;"><img src="~/Images/icon-delete.png" /></td>
                                 </tr>
                             }
                         }
                         else
                         {
-                            <p></p>
+                            <p>Nenhum resultado foi retornado da busca!</p>
                         }
 
                     }
@@ -88,10 +93,10 @@
 <script>
 
     $(".deleteEvent").click(function () {
-
         var idEvent = $(this).closest('tr').attr('id');
 
         bootbox.confirm("Deseja excluir esse evento?", function (result) {
+
             if (result == true) {
 
                 var data = {
@@ -106,7 +111,6 @@
                     cache: false,
                     async: true,
                     success: function (response) {
-
                         if (response.result == 1) {
                             bootbox.confirm('O evento foi excluido!', function (result) {
                                 if (result == true) {
@@ -116,22 +120,18 @@
                         } else {
                             bootbox.alert('Não foi possivel excluir o evento, tente novamente mais tarde');
                         }
-
                     },
                     error: function (response) {
-
                         bootbox.alert('Não foi possivel excluir o evento, tente novamente mais tarde');
                     }
                 });
-
-
             }
         });
-
-
     });    
 
-     $('.alterEvent').click(function () {  
+
+    $('.alterEvent').click(function () {  
+
         var idEvent = $(this).closest('tr').attr('id');
         var eventName = $(this).closest('tr').children('td.eventName').text();
         var eventDesc = $(this).closest('tr').children('td.eventDesc').text();
@@ -167,7 +167,6 @@
                     cache: false,
                     async: true,
                     success: function (response) {
-
                         if (response.result == 1) {
                             bootbox.confirm('O evento foi alterado!', function (result) {
                                 if (result == true) {
@@ -177,20 +176,13 @@
                         } else {
                             bootbox.alert('Não foi possivel alterar o evento, tente novamente mais tarde');
                         }
-
                     },
                     error: function (response) {
-
                         bootbox.alert('Não foi possivel alterar o evento, tente novamente mais tarde');
                     }
                 });
-
-
             }
         });
-
-
     });
-
-
+    
 </script>
